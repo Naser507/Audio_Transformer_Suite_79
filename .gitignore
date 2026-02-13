@@ -1,1 +1,16 @@
-.github_token
+.github_token 
+
+# Ignore Visual Studio and .NET build artifacts
+bin/
+obj/
+*.user
+*.suo
+*.pdb
+*.cache
+*.log
+*.vs/
+*.DS_Store
+
+# Keep releases folder if you want to push the EXE
+!releases/
+
