@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <!-- Build as a Windows executable -->
+    <OutputType>WinExe</OutputType>
+
+    <!-- Target .NET 8 for Windows Forms -->
+    <TargetFramework>net8.0-windows</TargetFramework>
+
+    <!-- Enable Windows Forms -->
+    <UseWindowsForms>true</UseWindowsForms>
+
+    <!-- Enable implicit usings to reduce boilerplate -->
+    <ImplicitUsings>enable</ImplicitUsings>
+
+    <!-- Enable nullable reference types for safer code -->
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <!-- Future dependencies (like LibGit2Sharp) can be added here if needed -->
+
+</Project>
+
