@@ -1,1 +1,17 @@
+# Secrets
 .github_token
+
+# .NET build artifacts
+**/bin/
+**/obj/
+
+# Build output folder
+artifacts/
+
+# Logs
+logs/
+
+# OS
+.DS_Store
+Thumbs.db
+
