@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Secrets
 .github_token
 
@@ -14,4 +15,26 @@ logs/
 # OS
 .DS_Store
 Thumbs.db
+=======
+.github_token 
 
+# Ignore Visual Studio and .NET build artifacts
+bin/
+obj/
+*.user
+*.suo
+*.pdb
+*.cache
+*.log
+*.vs/
+*.DS_Store
+
+# Keep releases folder if you want to push the EXE
+!releases/
+>>>>>>> 77064aff781e285be5fc787652cc1c66a155a949
+
+bin/
+obj/
+*.exe
+*.dll
+*.pdb

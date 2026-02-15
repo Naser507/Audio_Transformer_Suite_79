@@ -1,0 +1,23 @@
+# Use the official Windows image with .NET SDK
+FROM mcr.microsoft.com/dotnet/sdk:8.0-windowsservercore-ltsc2022
+
+# Set working directory inside container
+WORKDIR /src
+
+# Copy project files into container
+COPY ../../client/AudioTransformerSuite79 ./AudioTransformerSuite79
+
+# Set the entrypoint to powershell
+SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop';"]
+
+# Restore dependencies
+RUN dotnet restore ./AudioTransformerSuite79/AudioTransformerSuite79.csproj
+
+# Build Windows executable (self-contained)
+RUN dotnet publish ./AudioTransformerSuite79/AudioTransformerSuite79.csproj -c Release -r win-x64 --self-contained true -o C:/artifacts/windows
+
+# Output folder for .exe
+VOLUME C:/artifacts/windows
+
+# Default command: just keep container alive
+CMD ["powershell"]
