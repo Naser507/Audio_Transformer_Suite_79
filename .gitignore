@@ -38,3 +38,7 @@ obj/
 *.exe
 *.dll
 *.pdb
+
+# Build artifacts
+artifacts/
+*.exe
