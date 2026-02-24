@@ -1,24 +1,7 @@
-<<<<<<< HEAD
 # Secrets
 .github_token
 
-# .NET build artifacts
-**/bin/
-**/obj/
-
-# Build output folder
-artifacts/
-
-# Logs
-logs/
-
-# OS
-.DS_Store
-Thumbs.db
-=======
-.github_token 
-
-# Ignore Visual Studio and .NET build artifacts
+# .NET / Visual Studio build artifacts
 bin/
 obj/
 *.user
@@ -29,16 +12,18 @@ obj/
 *.vs/
 *.DS_Store
 
-# Keep releases folder if you want to push the EXE
-!releases/
->>>>>>> 77064aff781e285be5fc787652cc1c66a155a949
-
-bin/
-obj/
-*.exe
-*.dll
-*.pdb
-
-# Build artifacts
+# General build artifacts
 artifacts/
-*.exe
+*.dll
+*.exe   # ignore all .exe by default
+
+# Logs
+logs/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Release folder
+release/       # keep the folder itself
+release/**/*.exe   # ignore all .exe files inside release and its subfolders
