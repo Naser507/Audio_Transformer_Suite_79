@@ -17,7 +17,7 @@ fi
 read -p "Enter commit message: " COMMIT_MSG
 
 # -------------------------
-# Commit source code only (ignores .exe files)
+# Commit source code only
 # -------------------------
 echo "📦 Staging source code..."
 git add .
@@ -28,7 +28,7 @@ CURRENT_BRANCH=$(git branch --show-current)
 
 # Push using deploy key
 echo "🚀 Pushing source code to GitHub..."
-GIT_SSH_COMMAND="ssh -i $DEPLOY_KEY -o IdentitiesOnly=yes" git push origin "$CURRENT_BRANCH"
+GIT_SSH_COMMAND="ssh -i $DEPLOY_KEY -o IdentitiesOnly=yes" git push origin $CURRENT_BRANCH
 
 if [ $? -ne 0 ]; then
     echo "❌ Git push failed!"
@@ -47,28 +47,23 @@ if ! command -v gh &> /dev/null; then
     exit 1
 fi
 
-# Check if Release/Beta folder exists
-RELEASE_DIR="Release/Beta"
-if [ ! -d "$RELEASE_DIR" ]; then
-    echo "⚠️ Folder $RELEASE_DIR does not exist. Skipping GitHub Release."
-    exit 0
-fi
+# Copy latest .exe from artifacts/windows to Release/Beta automatically
+mkdir -p Release/Beta
+cp -f artifacts/windows/*.exe Release/Beta/ 2>/dev/null
 
-# Find the latest .exe file in Release/Beta
-LATEST_EXE=$(ls -t "$RELEASE_DIR"/*.exe 2>/dev/null | head -n1)
+# Find the latest .exe in Release/Beta
+LATEST_EXE=$(ls -t Release/Beta/*.exe 2>/dev/null | head -n1)
 
 if [ -z "$LATEST_EXE" ]; then
-    echo "⚠️ No .exe file found in $RELEASE_DIR. Skipping GitHub Release."
+    echo "⚠️ No .exe found in Release/Beta/. Skipping GitHub Release."
     exit 0
 fi
-
-echo "📦 Latest .exe found: $LATEST_EXE"
 
 # Generate version tag based on date/time: vYYYYMMDDHHMM
 VERSION_TAG="v$(date +%Y%m%d%H%M)"
 
 # Create GitHub Release and upload the .exe
-echo "🚀 Creating GitHub Release: $VERSION_TAG..."
+echo "🚀 Creating GitHub Release: $VERSION_TAG with asset $LATEST_EXE..."
 gh release create "$VERSION_TAG" "$LATEST_EXE" \
     --title "ATS79 Build $(date +%Y-%m-%d)" \
     --notes "Automated release generated from branch $CURRENT_BRANCH."

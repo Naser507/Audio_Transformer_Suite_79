@@ -15,7 +15,7 @@ obj/
 # General build artifacts
 artifacts/
 *.dll
-*.exe   # ignore all .exe by default
+*.exe   # ignore all executables by default
 
 # Logs
 logs/
@@ -25,5 +25,5 @@ logs/
 Thumbs.db
 
 # Release folder
-release/       # keep the folder itself
-release/**/*.exe   # ignore all .exe files inside release and its subfolders
+Release/          # keep the folder itself
+Release/**/*.exe  # ignore .exe files inside Release/Beta, etc.
