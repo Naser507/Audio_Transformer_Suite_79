@@ -48,7 +48,7 @@ if ! command -v gh &> /dev/null; then
 fi
 
 # Find the latest .exe in release/Beta
-LATEST_EXE=$(ls -t release/Beta/*.exe 2>/dev/null | head -n1)
+LATEST_EXE=$(ls -t Release/Beta/*.exe 2>/dev/null | head -n1)
 
 if [ -z "$LATEST_EXE" ]; then
     echo "⚠️ No .exe found in release/Beta/. Skipping GitHub Release."
