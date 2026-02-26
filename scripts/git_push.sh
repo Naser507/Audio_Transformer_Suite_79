@@ -17,11 +17,19 @@ fi
 read -p "Enter commit message: " COMMIT_MSG
 
 # -------------------------
-# Commit source code only
+# Commit source code only (ignore Release folder)
 # -------------------------
 echo "📦 Staging source code..."
-git add .
-git commit -m "$COMMIT_MSG"
+git add --all
+# Exclude Release folder from commit
+git reset Release/Beta/* 2>/dev/null
+
+# Only commit if there are changes
+if git diff --cached --quiet; then
+    echo "⚠️ No changes to commit. Skipping git commit."
+else
+    git commit -m "$COMMIT_MSG"
+fi
 
 # Detect current branch
 CURRENT_BRANCH=$(git branch --show-current)
@@ -47,11 +55,11 @@ if ! command -v gh &> /dev/null; then
     exit 1
 fi
 
-# Find the latest .exe in release/Beta
+# Find the latest .exe in Release/Beta
 LATEST_EXE=$(ls -t Release/Beta/*.exe 2>/dev/null | head -n1)
 
 if [ -z "$LATEST_EXE" ]; then
-    echo "⚠️ No .exe found in release/Beta/. Skipping GitHub Release."
+    echo "⚠️ No .exe found in Release/Beta/. Skipping GitHub Release."
     exit 0
 fi
 
