@@ -47,24 +47,20 @@ if ! command -v gh &> /dev/null; then
     exit 1
 fi
 
-# Copy latest .exe from artifacts/windows to Release/Beta automatically
-mkdir -p Release/Beta
-cp -f artifacts/windows/*.exe Release/Beta/ 2>/dev/null
+# Specify the main release executable explicitly
+MAIN_EXE="Release/Beta/ATS79.exe"
 
-# Find the latest .exe in Release/Beta
-LATEST_EXE=$(ls -t Release/Beta/*.exe 2>/dev/null | head -n1)
-
-if [ -z "$LATEST_EXE" ]; then
-    echo "⚠️ No .exe found in Release/Beta/. Skipping GitHub Release."
+if [ ! -f "$MAIN_EXE" ]; then
+    echo "⚠️ $MAIN_EXE not found. Skipping GitHub Release."
     exit 0
 fi
 
 # Generate version tag based on date/time: vYYYYMMDDHHMM
 VERSION_TAG="v$(date +%Y%m%d%H%M)"
 
-# Create GitHub Release and upload the .exe
-echo "🚀 Creating GitHub Release: $VERSION_TAG with asset $LATEST_EXE..."
-gh release create "$VERSION_TAG" "$LATEST_EXE" \
+# Create GitHub Release and upload the ATS79.exe
+echo "🚀 Creating GitHub Release: $VERSION_TAG with asset $MAIN_EXE..."
+gh release create "$VERSION_TAG" "$MAIN_EXE" \
     --title "ATS79 Build $(date +%Y-%m-%d)" \
     --notes "Automated release generated from branch $CURRENT_BRANCH."
 
@@ -73,4 +69,3 @@ if [ $? -eq 0 ]; then
 else
     echo "❌ Failed to create GitHub Release."
 fi
-
